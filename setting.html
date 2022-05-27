@@ -1,0 +1,227 @@
+<!Doctype html>
+<html lang="en">
+    
+    <title>budget</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <head>
+        <style>
+         .v-offect{
+        margin-bottom:6em;
+
+        margin-top:6em;
+        }
+        body{
+            margin: 0;
+        }
+        .bg-top{
+            background-color: #22577A;
+        }
+        .bg-searchbar{
+            background-color: #3C90C8;
+        }
+        .bg-side{
+
+            background-color: #90C0E0;
+        }
+        .bg-main{
+            background-color: #E3EFF7;
+        }
+        </style>
+    </head>
+
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        
+        <div class="row nav navbar-dark bg-top  navbar-brand ">
+        <div class="col-md-2  ">
+        <figure class="text-center align-self-center ">
+          <blockquote class="blockquote   text-white ">
+            <p>懶人植物照顧系統</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+            made by <cite title="Source Title">陳冠樺 彭駿浩</cite>
+          </figcaption>
+        </figure></div>
+      <div class="col-md-9 align-self-center border-start ">
+        <div class="row g-3">
+            <div class="col-sm-5 form-floating form-control-dark">
+              <input type="Date" class="form-control" placeholder="日期" aria-label="日期" id="floatingInput">
+              <label for="floatingInput">欲查詢的日期</label>
+            </div>
+            <div class="col-sm-5 form-floating">
+              <input type="time" class="form-control" placeholder="時間" aria-label="時間"id="floatingTime">
+              <label for="floatingTime">欲查詢的時間</label>
+            </div>
+            <div class="col-sm-2">
+              <input type="submit" class="form-control" placeholder="查詢" aria-label="查詢" value="查詢">
+            </div>
+          </div>
+    </div>
+    </div>
+        <div class="row ">
+        <nav class="col-sm-2 border-1  border-top  bg-side sidebar  position-sticky pt-3">
+           
+             
+                
+          <ul class="nav flex-column nav-pills nav-fill">
+            <li class="nav-item">
+              <a class="nav-link " aria-current="page" href="home.html">Home
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                  <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+                </svg>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="setting.html">Setting&nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+              </svg></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">溫溼度圖表</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">土壤溼度圖表</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="#">即時狀況&nbsp;<span class="badge rounded-pill bg-danger">Live</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Dashboard</a>
+            </li>
+          </ul>
+        </nav>
+          
+       
+            <!-- <div class="col-sm-2">
+                
+                <div class="list-group">
+                    <a href="home.html" class="list-group-item list-group-item-action active" aria-current="true">
+                     home
+                    </a>
+                    <a href="setting.html" class="list-group-item list-group-item-action">Setting</a>
+                    <a href="setting.html" class="list-group-item list-group-item-action">Setting</a>
+                    <a href="setting.html" class="list-group-item list-group-item-action">Setting</a>
+                    
+                  </div>
+                </div> -->
+                <!--此畫面主內容-->
+                <div class="col-sm-10 border-top border-1 bg-main" >
+                    <form>
+                    <div class="row  v-offect">
+                        
+                        <div class="col-md-3 offset-md-1  ">
+                          <div class="form-floating">
+                            <input type="email" class="form-control" id="floatingInputGrid" >
+                            <label for="floatingInputGrid">Email address</label>
+                          </div>
+             
+                        </div>
+                        <div class="col-md-3 offset-md-2  ">
+                            <div class="form-floating">
+                              <input type="email" class="form-control" id="floatingInputGrid" ">
+                              <label for="floatingInputGrid">Email address</label>
+                            </div>
+               
+                          </div>
+                      </div>
+                      <div class="row  v-offect">
+                        
+                        <div class="col-md-3 offset-md-1  ">
+                          <div class="form-floating">
+                            <input type="email" class="form-control" id="floatingInputGrid" >
+                            <label for="floatingInputGrid">Email address</label>
+                          </div>
+             
+                        </div>
+                        <div class="col-md-3 offset-md-2  ">
+                            <div class="form-floating">
+                              <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="mdo@example.com">
+                              <label for="floatingInputGrid">Email address</label>
+                            </div>
+               
+                          </div>
+                      </div>
+                      <div class="row v-offect ">
+                        
+                        <div class="col-md-3 offset-md-1  ">
+                          <div class="form-floating">
+                            <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="mdo@example.com">
+                            <label for="floatingInputGrid">Email address</label>
+                          </div>
+             
+                        </div>
+                        <div class="col-md-3 offset-md-2  ">
+                            <div class="form-floating">
+                              <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="mdo@example.com">
+                              <label for="floatingInputGrid">Email address</label>
+                            </div>
+               
+                          </div>
+                      </div>
+                    </form>
+                </div>
+                </div>  
+            
+            
+            
+            <script>
+               
+                    function getRandomInt(max) {
+                      return Math.floor(Math.random() * max);
+                    }
+                    
+                    function getdata(number){
+                      dataget=[getRandomInt(10), getRandomInt(10), getRandomInt(10), getRandomInt(10), getRandomInt(10)]
+                      labellist=[]
+                      for(let i=0;i<dataget.length;i++){
+                        labellist.push("Time");
+                      }
+                      let dataExample={
+                        // 參數設定[註1]
+                        type: "line", // 圖表類型
+                        data: {
+                            labels: labellist, // 標題
+                            datasets: [{
+                                fill:false ,
+                                label:number, // 標籤
+                                data: dataget, // 資料
+                                backgroundColor: [ // 背景色
+                                "#0d6efd",
+                                "#FFFFFF",
+                                "#FFFFFF",
+                                ],
+                                borderColor:"#0d6efd",
+                                
+                                borderWidth: 3 // 外框寬度
+                            }]
+                            
+                        },
+                        options: {
+                    
+                                layout: {
+                                    padding: 10
+                                }
+                                }
+                    }
+                    return dataExample;
+
+                    }
+                var ctx = document.getElementById( "chart1" );
+                var ctx1 = document.getElementById( "chart2" );
+                var ctx2= document.getElementById( "chart3" );
+                var ctx3 = document.getElementById( "chart4" );
+                
+                let   example = new Chart(ctx,getdata("表1"));
+                let   example1 = new Chart(ctx1,getdata("表2") );
+                let   example2 = new Chart(ctx2,getdata("表3") );
+                let   example3 = new Chart(ctx3,getdata("表4") );
+                document.getElementsByClassName("nav-link").onclick=fu
+            </script>
+
+        </body>
+        
+</html>
