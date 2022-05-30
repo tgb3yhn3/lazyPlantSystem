@@ -1,0 +1,262 @@
+<!Doctype html>
+<html lang="en">
+    
+    <title>budget</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <head>
+        <style>
+         
+        </style>
+    </head>
+
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+       
+        <div class="row">
+        <div class="col-sm-1"></div>
+        
+        <div class="row align-items-center align-self-center">
+          <div class="col-sm-2">
+        <figure class="text-center ">
+          <blockquote class="blockquote  p-1 text-dark">
+            <p>懶人植物照顧系統</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+            made by <cite title="Source Title">陳冠樺 彭駿浩</cite>
+          </figcaption>
+        </figure>
+      </div>
+    <div class="col-sm-10">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="set">Setting</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Live</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/resetDB">Reset DB</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+        <div class="row">
+        <nav class="col-sm-2">
+           
+             
+          <form action="/" method="post">
+          <ul class="nav flex-column nav-pills nav-fill ">
+            <li class="nav-item">
+              <div class="text-center   form-floating form-control-dark">
+                <input type="Date" name="startdate"class="form-control search" placeholder="日期" aria-label="日期" id="floatingInput">
+                <label class="label" for="floatingInput">欲查詢的起始日期</label>
+              </div>
+              <div class=" form-floating">
+                <input type="time" name="starttime"class="form-control search" placeholder="時間" aria-label="時間"id="floatingTime">
+                <label class="label" for="floatingTime">欲查詢的起始時間</label>
+              </div>
+              <br>
+              <div class="text-center   form-floating form-control-dark">
+                <input type="Date" name="enddate"class="form-control search" placeholder="日期" aria-label="日期" id="floatingInput">
+                <label class="label" for="floatingInput">欲查詢的結束日期</label>
+              </div>
+              <div class=" form-floating">
+                <input type="time" name="endtime"class="form-control search" placeholder="時間" aria-label="時間"id="floatingTime">
+                <label class="label" for="floatingTime">欲查詢的結束時間</label>
+              </div>
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Search</button>
+              </div>
+            </li>
+
+           
+          </ul>
+        </form>
+        </nav>
+          
+       
+            <!-- <div class="col-sm-2">
+                
+                <div class="list-group">
+                    <a href="home.html" class="list-group-item list-group-item-action active" aria-current="true">
+                     home
+                    </a>
+                    <a href="setting.html" class="list-group-item list-group-item-action">Setting</a>
+                    <a href="setting.html" class="list-group-item list-group-item-action">Setting</a>
+                    <a href="setting.html" class="list-group-item list-group-item-action">Setting</a>
+                    
+                  </div>
+                </div> -->
+                <!--此畫面主內容-->
+                <div class="col-sm-10" >
+                  <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active" data-bs-interval="60000">
+                        <div class="card" style="">
+                          <canvas id="chart1" width=18rem height=5rem></canvas>
+                          <div class="card-body">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">溫度</th>
+                                  <th scope="col">空氣濕度</th>
+                                  <th scope="col">土壤濕度</th>
+                                  <th scope="col">時間</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for i in rv %}
+                                <tr>
+                                  <th scope="row">{{i[0]}}</th>
+                                  <td>{{i[1]}}</td>
+                                  <td>{{i[2]}}</td>
+                                  <td>{{i[3]}}</td>
+                                  <td>{{i[4]}}</td>
+                                </tr>
+                                {%endfor%}
+                               
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="carousel-item" data-bs-interval="0" >
+                        <div class="card" width=18rem height=5rem>
+                          <img src="{{ url_for('video_feed') }}"  >
+                          <div class="card-body">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">事件</th>
+                                  <th scope="col">時間</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for i in rv %}
+                                <tr>
+                                  <th scope="row">{{i[0]}}</th>
+                                  <td>{{i[1]}}</td>
+                                  <td>{{i[2]}}</td>
+                                 
+                                </tr>
+                                {%endfor%}
+                               
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                    
+                     
+                </div>
+                <div class="col-sm-1"></div>
+        </div>
+                </div>  
+            
+            
+            
+            <script>
+               
+                    function getRandomInt(max) {
+                      return Math.floor(Math.random() * max);
+                    }
+                    var dataF={{data|tojson}}
+                    function getdata(number,str1=null,str2=null,str3=null){
+                      dataget=[getRandomInt(10), getRandomInt(10), getRandomInt(10), getRandomInt(10), getRandomInt(10)]
+                      labellist=[]
+                      for(let i=0;i<dataget.length;i++){
+                        labellist.push("Time");
+                      }
+                      
+                      let dataExample={
+                        // 參數設定[註1]
+                        type: "line", // 圖表類型
+                        data: {
+                            labels: dataF[3], // 標題
+                            datasets: [{
+                                fill:false ,
+                                label:str1, // 標籤
+                                data: dataF[number], // 資料
+                                backgroundColor: [ // 背景色
+                                "#0d6efd",
+                                "#FFFFFF",
+                                "#FFFFFF",
+                                ],
+                                borderColor:"#0d6efd",
+                                
+                                borderWidth: 3 // 外框寬度
+                            },{
+                          
+                                fill:false ,
+                                label:str2, // 標籤
+                                data: dataF[number+2], // 資料
+                                backgroundColor: [ // 背景色
+                                "#F7CB15",
+                                "#FFFFFF",
+                                "#FFFFFF",
+                                ],
+                                borderColor:"#F7CB15",
+                                
+                                borderWidth: 3 // 外框寬度
+                            }
+                          ,{
+                          
+                          fill:false ,
+                          label:str2, // 標籤
+                          data: dataF[number+1], // 資料
+                          backgroundColor: [ // 背景色
+                          "#FF0000",
+                          "#FFFFFF",
+                          "#FFFFFF",
+                          ],
+                          borderColor:"#FF0000",
+                          
+                          borderWidth: 3 // 外框寬度
+                      }
+                          ]
+                            
+                        },
+                        options: {
+                    
+                                layout: {
+                                    padding: 10
+                                }
+                                }
+                    }
+                    return dataExample;
+
+                    }
+                var ctx = document.getElementById( "chart1" );
+                var ctx1 = document.getElementById( "chart2" );
+                var ctx2= document.getElementById( "chart3" );
+                var ctx3 = document.getElementById( "chart4" );
+                
+                let   example = new Chart(ctx,getdata(0,'溫度','濕度','土壤濕度'));
+                // let   example1 = new Chart(ctx1,getdata(1) );
+                // let   example2 = new Chart(ctx2,getdata(2) );
+                // let   example3 = new Chart(ctx3,getdata("表4") );
+                document.getElementsByClassName("nav-link").onclick=fu
+            </script>
+
+        </body>
+        
+</html>
