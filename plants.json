@@ -1,0 +1,172 @@
+{
+  "plants": [
+    {
+      "name": "虎尾蘭",
+      "temp": "24",
+      "humid": "50",
+      "lightTime": "0",
+      "soilHumid": "20"
+    },
+
+    {
+      "name": "龜背芋",
+      "temp": "25",
+      "humid": "80 ",
+      "lightTime": "2",
+      "soilHumid": "50"
+    },
+
+    {
+      "name": "吊蘭",
+      "temp": "20",
+      "humid": "80",
+      "lightTime": "4",
+      "soilHumid": "80"
+    },
+
+    {
+      "name": "黃金葛",
+      "temp": "24",
+      "humid": "50",
+      "lightTime": "4",
+      "soilHumid": "80"
+    },
+
+    {
+      "name": "發財樹",
+      "temp": "20",
+      "humid": "80",
+      "lightTime": "0",
+      "soilHumid": "20"
+    },
+
+    {
+      "name": "蔓綠絨",
+      "temp": "24",
+      "humid": "80",
+      "lightTime": "3",
+      "soilHumid": "50"
+    },
+
+    {
+      "name": "琴葉榕",
+      "temp": "28",
+      "humid": "20",
+      "lightTime": "4",
+      "soilHumid": "50"
+    },
+
+    {
+      "name": "天堂鳥",
+      "temp": "20",
+      "humid": "80",
+      "lightTime": "6",
+      "soilHumid": "20"
+    },
+    {
+      "name": "龍血樹",
+      "temp": "28",
+      "humid": "30",
+      "lightTime": "5",
+      "soilHumid": "50"
+    },
+    {
+      "name": "金錢樹",
+      "temp": "28",
+      "humid": "20",
+      "lightTime": "5",
+      "soilHumid": "20"
+    },
+    {
+      "name": "巴西木",
+      "temp": "23",
+      "humid": "80",
+      "lightTime": "8",
+      "soilHumid": "50"
+    },
+    {
+      "name": "幸福樹",
+      "temp": "28",
+      "humid": "80",
+      "lightTime": "6",
+      "soilHumid": "80"
+    },
+    {
+      "name": "常春藤",
+      "temp": "20",
+      "humid": "20",
+      "lightTime": "3",
+      "soilHumid": "50"
+    },
+    {
+      "name": "綠蘿",
+      "temp": "24",
+      "humid": "80",
+      "lightTime": "3",
+      "soilHumid": "50"
+    },
+    {
+      "name": "富貴竹",
+      "temp": "25",
+      "humid": "80",
+      "lightTime": "2",
+      "soilHumid": "80"
+    },
+    {
+      "name": "文竹",
+      "temp": "24",
+      "humid": "50",
+      "lightTime": "3",
+      "soilHumid": "50"
+    },
+    {
+      "name": "紅掌",
+      "temp": "23",
+      "humid": "80",
+      "lightTime": "2",
+      "soilHumid": "80"
+    },
+    {
+      "name": "白掌",
+      "temp": "25",
+      "humid": "50",
+      "lightTime": "4",
+      "soilHumid": "50"
+    },
+    {
+      "name": "鴨腳木",
+      "temp": "25",
+      "humid": "80",
+      "lightTime": "4",
+      "soilHumid": "80"
+    },
+    {
+      "name": "散尾葵",
+      "temp": "80",
+      "humid": "20",
+      "lightTime": "6",
+      "soilHumid": "50"
+    },
+    {
+      "name": "橡皮樹",
+      "temp": "25",
+      "humid": "50",
+      "lightTime": "6",
+      "soilHumid": "20"
+    },
+    {
+      "name": "孔雀竹芋",
+      "temp": "25",
+      "humid": "80",
+      "lightTime": "3",
+      "soilHumid": "80"
+    },
+    {
+      "name": "平安樹",
+      "temp": "24",
+      "humid": "50",
+      "lightTime": "5",
+      "soilHumid": "50"
+    }
+  ]
+}

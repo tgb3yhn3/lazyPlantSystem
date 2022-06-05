@@ -1,14 +1,41 @@
 from flask import Flask,render_template, request
 from flask_mysqldb import MySQL
 import numpy as np
+from numpy import interp  # To scale values
 from flask import Flask, render_template, Response
 import cv2
 import _thread
 import time
 import pymysql
+ # To communicate with SPI devices
+import datetime
 from dbutils.pooled_db import PooledDB
+
+# import spidev
+# import RPi.GPIO as GPIO
 # import adafruit_dht
-# import spidev # To communicate with SPI devices
+# DHT_PIN=16
+# PWM_PIN=20
+# DIR_PIN=21
+# LED_PIN=1
+# BUTTON_PIN=7
+# MOTOR_RELAY_PIN=12
+
+
+# RELAY_ON=False
+# GPIO.setwarnings(False)
+# GPIO.setmode(GPIO.BCM)#use BCM mode
+# GPIO.setup(PWM_PIN, GPIO.OUT)
+# GPIO.setup(DIR_PIN, GPIO.OUT)
+# GPIO.setup(MOTOR_RELAY_PIN, GPIO.OUT)
+# GPIO.setup(LED_PIN, GPIO.OUT)
+# GPIO.setup(BUTTON_PIN, GPIO.IN)
+# device=adafruit_dht.DHT11(DHT_PIN)
+
+# pwmOut = GPIO.PWM(PWM_PIN, 50)#inA control Fan speed
+# GPIO.output(DIR_PIN,False)#inB control fan direction
+# spi = spidev.SpiDev() # Created an object
+# spi.open(0,0) 
 app = Flask(__name__)
  
 app.config['MYSQL_HOST'] = 'localhost'
@@ -21,6 +48,7 @@ mysql = PooledDB(pymysql,10,host='localhost',user='root',passwd='51689883',db='s
 camera = cv2.VideoCapture(0)  # use 0 for web camera
 #  for cctv camera use rtsp://username:password@ip_address:554/user=username_password='password'_channel=channel_number_stream=0.sdp' instead of camera
 successRes={"status":"success"}
+
 def gen_frames():  # generate frame by frame from camera
     while True:
         # Capture frame-by-frame
@@ -116,21 +144,25 @@ def users():
             
         # print(redata)
         return render_template("home.html",data=redata,rv=rv,ev=ev)
-
+@app.route('/qset',methods=["GET"])
+def quickset():
+    cur=mysql.connection().cursor()
+    cur.execute(' select * from targetPlant;')
+    rv = cur.fetchall()
+    plant=[]
+    for i in rv:
+        print(i[1])
+        plant.append(i[1])
+    print(plant)
+    return render_template("quicksetting.html",rv=rv)
 @app.route('/set' ,methods=["POST","GET"])
 def setting():
      if request.method == "GET":
         cur = mysql.connection().cursor()
         cur.execute(' select * from target;')
         rv = cur.fetchone()
-        cur.execute(' select * from targetPlant;')
-        rvplant = cur.fetchall()
-        print(rvplant)
-        plant=[]
-        for i in rvplant:
-            print(i[1])
-            plant.append(i[1])
-        return render_template("setting.html",rv=rv,rvplant=plant)
+        
+        return render_template("setting.html",rv=rv)
      if request.method == "POST":
         cur = mysql.connection().cursor()
         print(" UPDATE target SET temp="+request.form['targetTemp']+" , humi="+request.form['targetHumi']+" , light="+request.form['targetLight']+" , soil="+request.form['targetSoil']+" where no=1;")
@@ -138,38 +170,23 @@ def setting():
         mysql.connection().commit()
         cur.execute(' select * from target ;')
         rv = cur.fetchone()
-        return render_template("setting.html",rv=rv)
-def rasberrypi():
-    # DHT_PIN=16
-    # PWM_PIN=20
-    # DIR_PIN=21
-    # LED_PIN=1
-    # BUTTON_PIN=7
-    # MOTOR_RELAY_PIN=12
-    # targetTemp=25
-    # RELAY_ON=False
-    # GPIO.setwarnings(False)
-    # GPIO.setmode(GPIO.BCM)#use BCM mode
-    # GPIO.setup(PWM_PIN, GPIO.OUT)
-    # GPIO.setup(DIR_PIN, GPIO.OUT)
-    # GPIO.setup(MOTOR_RELAY_PIN, GPIO.OUT)
-    # GPIO.setup(LED_PIN, GPIO.OUT)
-    # GPIO.setup(BUTTON_PIN, GPIO.IN)
-    # device=adafruit_dht.DHT11(DHT_PIN)
-
-    # pwmOut = GPIO.PWM(PWM_PIN, 50)#inA control Fan speed
-    # GPIO.output(DIR_PIN,False)#inB control fan direction
-    # #setup
-    #-----------------
-
-    while True:
         
-        cur = mysql.connection().cursor()
-        cur.execute(' INSERT INTO sensor VALUES (NULL, 1,2,3,CURRENT_TIMESTAMP);')
-        mysql.connection().commit()
-        print("ya")
-        time.sleep(10)
-          
+        return render_template("setting.html",rv=rv)
+@app.route('/set/<string:setplant>' ,methods=["POST","GET"])
+def setplant(setplant):
+    cur = mysql.connection().cursor()
+    cur.execute("select * from targetPlant where name='"+setplant+"';")
+    rv=cur.fetchone()
+    cur.execute(" UPDATE target SET temp="+str(rv[2])+
+    " , humi="+str(rv[3])+
+    " , light="+str(rv[4])+
+    " , soil="+str(rv[5])+
+    " , plant='"+str(rv[1])+
+    "'  where no=1;"
+    )
+    mysql.connection().commit()
+    
+    return setting()
 @app.route('/readJson' )
 def readJson():
     import json
@@ -185,8 +202,79 @@ def readJson():
             print(i['soilHumid'])
             cur = mysql.connection().cursor()
             cur.execute("insert INTO targetPlant VALUES(NULL,'"+i["name"]+"',"+i['temp']+","+i['humid']+","+i['lightTime']+","+i['soilHumid']+");")
+# Read MCP3008 data
+def analogInput(channel):
+  spi.max_speed_hz = 1350000
+  adc = spi.xfer2([1,(8+channel)<<4,0])
+  data = ((adc[1]&3) << 8) + adc[2]
+  return data
+
+def rasberrypi():
+   
+    #setup
+    #-----------------
+
+    while True:
+        try:
+            cur.execute('select * from target')
+            rv = cur.fetchone()
+
+            targetTemp=rv[1]
+            targetHumi=rv[2]
+            targetLight=rv[3]
+            targetSoil=rv[4]
+            t=device.temperature
+            h=device.humidity
+            if(t>=targetTemp or h>targetHumi):
+                pwmOut.start(50)
+            else:
+                pwmOut.stop(0)
+            tonow = datetime.datetime.now()
+            
+            dts = str(tonow.year)+str(tonow.month)+str(tonow.day)
+            dt = datetime.datetime.strptime(dts,"%Y%m%d")
+            delta=datetime.timedelta(hours=targetLight)
+            local=datetime.timedelta(hours=8)
+            now=local+datetime.datetime.now()#實際時間
+            target=dt+local+delta
+            if(now<target):
+                GPIO.output(LED_PIN,True)
+            else:
+                GPIO.output(LED_PIN,False)
+            print(t)
+            print(h)
+
+            s = analogInput(0) # Reading from CH0
+            s = interp(s, [0, 1023], [100, 0])
+            s = int(s)
+            print("Moisture:", s)
+            nows=100-s
+            if(nows<targetSoil):
+                GPIO.output(MOTOR_RELAY_PIN,True)
+            else:
+                GPIO.output(MOTOR_RELAY_PIN,False)
+            cur = mysql.connection().cursor()
+            cur.execute(' INSERT INTO sensor VALUES (NULL, '+str(h)+', '+str(t)+','+str(s)+',CURRENT_TIMESTAMP);')
             mysql.connection().commit()
+            time.sleep(60)
+        except KeyboardInterrupt:
+            device.exit()
+            GPIO.output(MOTOR_RELAY_PIN,False)
+            GPIO.output(LED_PIN,False)
+            pwmOut.stop(0)
+            print("KI")
+            break
+        except RuntimeError:
+            print("runtimeError retry 5 second later")
+            time.sleep(10)
+            continue
+        except OverflowError:
+            print("OverflowError retry 5 second later")
+            time.sleep(10)
+            continue
+        
 if __name__ == '__main__':
-    _thread.start_new_thread ( rasberrypi,() )
-    app.run(debug=True)
+   # _thread.start_new_thread ( rasberrypi,() )
+    app.run('0.0.0.0',debug=True)
+    
    
