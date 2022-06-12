@@ -54,7 +54,7 @@
         <nav class="col-sm-2">
            
              
-          <form action="/" method="post">
+          <form action="" method="post">
           <ul class="nav flex-column nav-pills nav-fill ">
             <li class="nav-item">
               <div class="text-center   form-floating form-control-dark">
@@ -75,7 +75,7 @@
                 <label class="label" for="floatingTime">欲查詢的結束時間</label>
               </div>
               <div class="d-grid gap-2">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <button class="btn btn-primary"formaction="/home" type="submit">Search</button>
               </div>
             </li>
 
@@ -87,42 +87,43 @@
           <div class="row">
             <div class="col-sm-3">
               <div class="card" style="width: 18rem;">
-            
+                
                 <div class="card-body">
                   <h5 class="card-title">新增植物</h5>
-                  <p class="card-text">
-                    <div class="form-floating mb-3">
-                      <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                      <label for="floatingInput">點擊輸入植物名稱</label>
+                  <form action="/" method="POST">
+                  <ul class="list-group list-group-flush">
+                    <div class="input-group input-group-sm mb-3">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">植物名稱</span>
+                      <input type="text" name="name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required>
                     </div>
-                  </p>
+                    <div class="input-group input-group-sm mb-3">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">目標溫度</span>
+                      <input type="number"name="temp" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"required>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">目標濕度</span>
+                      <input type="number" name="humi"class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"required>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">目標光照時間</span>
+                      <input type="number" name="light"class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"required>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">目標土壤濕度</span>
+                      <input type="number"name="soil" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"required>
+                      <button class="btn btn-outline-secondary"formaction="/qset" type="submit" id="inputGroupFileAddon04">新增</button>
+                    </div>
+                  </form>
+                  </ul>
+                    
+                     
+                  
+                    </div>
+                 
+                  
                 </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">點擊輸入目標濕度</label>
-                  </div></li>
-                  <li class="list-group-item">
-                    <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">點擊輸入目標濕度</label>
-                  </div></li>
-                  <li class="list-group-item">
-                    <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">點擊輸入目標濕度</label>
-                  </div></li>
-                  <li class="list-group-item">
-                    <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">點擊輸入目標濕度</label>
-                  </div></li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">新增</a>
-                </div>
-              </div>
+              
+ 
             </div>
           {% for i in rv %}
           <div class="col-sm-3">

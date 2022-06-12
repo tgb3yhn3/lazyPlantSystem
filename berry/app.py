@@ -144,17 +144,37 @@ def users():
             
         # print(redata)
         return render_template("home.html",data=redata,rv=rv,ev=ev)
-@app.route('/qset',methods=["GET"])
+@app.route('/qset',methods=["GET","POST"])
 def quickset():
-    cur=mysql.connection().cursor()
-    cur.execute(' select * from targetPlant;')
-    rv = cur.fetchall()
-    plant=[]
-    for i in rv:
-        print(i[1])
-        plant.append(i[1])
-    print(plant)
-    return render_template("quicksetting.html",rv=rv)
+    if request.method == "GET":
+        cur=mysql.connection().cursor()
+        cur.execute(' select * from targetPlant;')
+        rv = cur.fetchall()
+        plant=[]
+        for i in rv:
+            print(i[1])
+            plant.append(i[1])
+        print(plant)
+        return render_template("quicksetting.html",rv=rv)
+    if request.method == "POST":
+        cur=mysql.connection().cursor()
+        cur.execute('insert into targetPlant values('+
+        'NULL,"'+
+        request.form['name']+'",'+
+        request.form['temp']+' , '+
+        request.form['humi']+' , '+
+        request.form['light']+' , '+
+        request.form['soil']+'  '+  
+           ' );')
+           
+        cur.execute(' select * from targetPlant;')
+        rv = cur.fetchall()
+        plant=[]
+        for i in rv:
+            print(i[1])
+            plant.append(i[1])
+        print(plant)
+        return render_template("quicksetting.html",rv=rv)
 @app.route('/set' ,methods=["POST","GET"])
 def setting():
      if request.method == "GET":
@@ -174,19 +194,20 @@ def setting():
         return render_template("setting.html",rv=rv)
 @app.route('/set/<string:setplant>' ,methods=["POST","GET"])
 def setplant(setplant):
-    cur = mysql.connection().cursor()
-    cur.execute("select * from targetPlant where name='"+setplant+"';")
-    rv=cur.fetchone()
-    cur.execute(" UPDATE target SET temp="+str(rv[2])+
-    " , humi="+str(rv[3])+
-    " , light="+str(rv[4])+
-    " , soil="+str(rv[5])+
-    " , plant='"+str(rv[1])+
-    "'  where no=1;"
-    )
-    mysql.connection().commit()
-    
-    return setting()
+    if request.method == "GET":
+        cur = mysql.connection().cursor()
+        cur.execute("select * from targetPlant where name='"+setplant+"';")
+        rv=cur.fetchone()
+        cur.execute(" UPDATE target SET temp="+str(rv[2])+
+        " , humi="+str(rv[3])+
+        " , light="+str(rv[4])+
+        " , soil="+str(rv[5])+
+        " , plant='"+str(rv[1])+
+        "'  where no=1;"
+        )
+        mysql.connection().commit()
+        
+        return setting()
 @app.route('/readJson' )
 def readJson():
     import json
@@ -239,8 +260,10 @@ def rasberrypi():
             target=dt+local+delta
             if(now<target):
                 GPIO.output(LED_PIN,True)
+                print("LED ON")
             else:
                 GPIO.output(LED_PIN,False)
+                print("LED OFF")
             print(t)
             print(h)
 
