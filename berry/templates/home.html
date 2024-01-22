@@ -3,15 +3,39 @@
     
     <title>budget</title>
     <meta charset="utf-8">
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <head>
         <style>
-         
+          #searchbar{
+          display:inline;
+        }
+        
+        #searchbutton{
+          display:none;
+        }
+        @media (max-width: 992px) { 
+          #searchbar{
+            display:none;
+        }
+        #searchbutton{
+          display:inline;
+        }
+        }
         </style>
     </head>
-
+    <script>
+      $(document).ready(function(){
+      $("#searchbutton").click(function(){
+      $("#searchbar").toggle();
+      });
+    });
+    
+      
+      </script>
     <body>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
        
@@ -40,14 +64,16 @@
         <li class="nav-item">
           <a class="nav-link " href="/qset">Quick Setting</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/resetDB">Reset DB</a>
-        </li>
+   
       </ul>
     </div>
     </div>
-        <div class="row">
-        <nav class="col-sm-2">
+    <center><button id="searchbutton" type="button" class="btn btn-primary">以日期時間搜尋</button></center>
+    
+    <div class="row">
+      
+   
+        <nav class="col-lg-2" id="searchbar">
            
              
           <form action="/" method="post">
@@ -99,7 +125,7 @@
                     <div class="carousel-inner">
                       <div class="carousel-item active" data-bs-interval="60000">
                         <div class="card" style="">
-                          <canvas id="chart1" width=18rem height=5rem></canvas>
+                          <canvas id="chart1" width=18rem height=10rem></canvas>
                           <div class="card-body">
                             <table class="table">
                               <thead>
@@ -129,22 +155,22 @@
                       </div>
                       <div class="carousel-item" data-bs-interval="0" >
                         <div class="card" width=18rem height=5rem>
-                          <img src="{{ url_for('video_feed') }}"  >
+                          <img height="640px" width="auto" src="{{ url_for('video_feed') }}"  >
                           <div class="card-body">
                             <table class="table">
                               <thead>
                                 <tr>
-                                  <th scope="col">No</th>
-                                  <th scope="col">事件</th>
-                                  <th scope="col">時間</th>
+                                  <th scope="col">目前溫度</th>
+                                  <th scope="col">目前濕度</th>
+                                  <th scope="col">目前土壤濕度</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {% for i in ev %}
                                 <tr>
-                                  <th scope="row">{{i[0]}}</th>
+                                  <th scope="row">{{i[2]}}</th>
                                   <td>{{i[1]}}</td>
-                                  <td>{{i[2]}}</td>
+                                  <td>{{i[3]}}</td>
                                  
                                 </tr>
                                 {%endfor%}
@@ -168,7 +194,7 @@
                     
                      
                 </div>
-                <div class="col-sm-1"></div>
+                
         </div>
                 </div>  
             
@@ -180,6 +206,10 @@
                       return Math.floor(Math.random() * max);
                     }
                     var dataF={{data|tojson}}
+                    for(let i=0;i<dataF[3].length;i++){
+                      dataF[3][i]=dataF[3][i].substring(0,12)
+                    }
+                    console.log(dataF[3][0].substring(0,12))
                     function getdata(number,str1=null,str2=null,str3=null){
                       dataget=[getRandomInt(10), getRandomInt(10), getRandomInt(10), getRandomInt(10), getRandomInt(10)]
                       labellist=[]

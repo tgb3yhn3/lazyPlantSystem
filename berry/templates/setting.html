@@ -3,6 +3,8 @@
     
     <title>budget</title>
     <meta charset="utf-8">
+    <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
@@ -13,17 +15,52 @@
 
         margin-top:6em;
         }
+        #searchbar{
+          display:block;
+        }
         
+        #searchbutton{
+          display:none;
+        }
+        #forminput{
+          width: 100%;
+        }
+        #center{
+          text-align:center;
+        }
+        @media (max-width: 992px) { 
+          #searchbar{
+            display:none;
+        }
+        #searchbutton{
+          display:inline;
+        }
+        #forminput{
+          width: 50%;
+          text-align:center;
+        }
+        }
+        .nomargin{
+          margin:0;
+        }
         </style>
     </head>
-
+    <script>
+      $(document).ready(function(){
+      $("#searchbutton").click(function(){
+      $("#searchbar").toggle();
+      });
+    });
+    
+      
+      </script>
     <body>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
         <div class="row">
-          <div class="col-sm-1"></div>
+          <div class="col-lg-1"></div>
           
           <div class="row align-items-center align-self-center">
-            <div class="col-sm-2">
+            <div class="col-lg-2">
           <figure class="text-center ">
             <blockquote class="blockquote  p-1 text-dark">
               <p>懶人植物照顧系統</p>
@@ -33,7 +70,7 @@
             </figcaption>
           </figure>
         </div>
-      <div class="col-sm-10">
+      <div class="col-lg-10">
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link " aria-current="page" href="/home">Home</a>
@@ -44,14 +81,16 @@
           <li class="nav-item">
             <a class="nav-link " href="/qset">Quick Setting</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/resetDB">Reset DB</a>
-          </li>
+          
         </ul>
       </div>
       </div>
-          <div class="row">
-          <nav class="col-sm-2">
+      
+      
+      <div class="row nomargin">
+        
+     
+          <nav class="col-lg-2" id="searchbar">
              
                
             <form action="/" method="post">
@@ -84,29 +123,29 @@
           </form>
           </nav>
           <!-- 此為主要內容 -->
-          <div class="col-sm-10" >
+          <div class="col-lg-10" id="center">
             <form action="/set"method="POST">
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label for="exampleFormControlInput1">目前目標溫度(&deg;C)</label>
-                    <input type="num" value="{{rv[1]}}" class="form-control" id="exampleFormControlInput1" disabled>
+                    <center><input type="num"id="forminput" value="{{rv[1]}}" class="form-control" id="exampleFormControlInput1" disabled></center>
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">目前目標濕度(%)</label>
-                    <input type="num" value="{{rv[2]}}"class="form-control" id="exampleFormControlInput1" disabled>
+                    <center> <input type="num"id="forminput" value="{{rv[2]}}"class="form-control" id="exampleFormControlInput1" disabled></center>
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect2">目前目標照明時間(小時)</label>
-                    <input type="num" value="{{rv[3]}}"class="form-control" id="exampleFormControlInput1"disabled >
+                    <center> <input type="num"id="forminput" value="{{rv[3]}}"class="form-control" id="exampleFormControlInput1"disabled ></center>
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect2">目前目標土壤濕度</label>
-                    <input type="num" value="{{rv[4]}}"class="form-control" id="exampleFormControlInput1"disabled >
+                    <center> <input type="num"id="forminput" value="{{rv[4]}}"class="form-control" id="exampleFormControlInput1"disabled ></center>
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect2">目前植物</label>
-                    <input type="text" value="{{rv[5]}}"class="form-control" id="exampleFormControlInput1"disabled >
+                    <center> <input type="text"id="forminput" value="{{rv[5]}}"class="form-control" id="exampleFormControlInput1"disabled ></center>
                   </div>
                   <label></label>
                   <!-- <div class="btn-group">
@@ -121,22 +160,22 @@
                     </ul>
                   </div> -->
                 </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
+                <div class="col-lg-6">
+                  <div class="form-group " >
                     <label for="exampleFormControlInput1">目標溫度(&deg;C)</label>
-                    <input type="num" name="targetTemp" value="26"class="form-control" id="exampleFormControlInput1" >
+                    <center><input id="forminput" type="num" name="targetTemp" value="26"class="form-control  align-self-center" id="exampleFormControlInput1" ></center>
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">目標濕度(%)</label>
-                    <input type="num" name="targetHumi"value="60"class="form-control" id="exampleFormControlInput1" >
+                    <center><input id="forminput"type="num" name="targetHumi"value="60"class="form-control" id="exampleFormControlInput1" ></center>
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect2">目標照明時間(小時)</label>
-                    <input type="num"name="targetLight" value="12"class="form-control" id="exampleFormControlInput1" >
+                    <center><input id="forminput"type="num"name="targetLight" value="12"class="form-control" id="exampleFormControlInput1" ></center>
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect2">目前目標土壤濕度</label>
-                    <input type="num" name="targetSoil" value="12"class="form-control" id="exampleFormControlInput1" >
+                    <center><input id="forminput"type="num" name="targetSoil" value="12"class="form-control" id="exampleFormControlInput1" ></center>
                   </div>
                   <br>
                   <div class="form-group">
